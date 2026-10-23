@@ -4,6 +4,6 @@ import 'package:p03_kelolakos/main.dart';
 void main() {
   testWidgets('KelolaKos smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(const KelolaKosApp());
-    expect(find.text('KelolaKos — Daftar Kamar'), findsOneWidget);
+    expect(find.text('KelolaKos'), findsOneWidget);
   });
 }

@@ -32,4 +32,19 @@ class Room {
       isOccupied: isOccupied ?? this.isOccupied,
     );
   }
+
+  String get formattedPrice {
+    return monthlyPrice.toString().replaceAllMapped(
+          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+          (Match m) => '${m[1]}.',
+        );
+  }
+
+  List<String> get facilityList {
+    return facilities
+        .split(',')
+        .map((f) => f.trim())
+        .where((f) => f.isNotEmpty)
+        .toList();
+  }
 }
