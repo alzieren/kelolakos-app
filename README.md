@@ -1,40 +1,49 @@
-# P03 — KelolaKos Mini App
+# P03 — KelolaKos
 
-Aplikasi mobile berbasis Flutter yang dirancang untuk membantu pemilik indekos mengelola kamar dan status hunian secara praktis. Aplikasi ini memiliki tiga layar utama: daftar kamar kos, rincian detail kamar, dan formulir pendaftaran kamar baru dengan validasi masukan.
+Aplikasi Flutter sederhana untuk pencatatan dan pengelolaan kamar kos. Aplikasi ini dibuat untuk tugas praktikum P03, dengan fungsi utama untuk melihat daftar kamar kos, melihat rincian tiap kamar, mengubah status kamar (tersedia / terisi), dan menambahkan data kamar baru.
 
-## Fitur & Komponen Utama
-1. **Daftar Kamar Interaktif (`RoomListScreen`)**: Menampilkan daftar kamar yang disimpan di memori menggunakan `ListView.builder` serta ringkasan jumlah kamar tersedia secara real-time.
-2. **Navigasi Dua Arah**: Navigasi maju-mundur antara Layar Daftar, Layar Detail, dan Layar Tambah Kamar dengan pengembalian data via `Navigator.pop`.
-3. **Widget Kustom Reusable (`RoomCard`)**: Kartu kamar yang dirancang modular dan digunakan berulang kali dengan data berbeda (di layar daftar dan di kartu ringkasan layar detail).
-4. **Formulir Validasi (`AddRoomScreen`)**: Memiliki tiga tipe masukan berbeda (`TextFormField` teks, `DropdownButtonFormField` tipe kamar, dan `SwitchListTile` status hunian) yang menolak masukan kosong atau angka tidak valid.
-5. **Manajemen State**: Menggunakan `StatefulWidget` dengan `setState` yang tepat saat menambah kamar baru maupun memperbarui status hunian.
+## Halaman dan Fitur
 
----
+1. **Daftar Kamar (`RoomListScreen`)**
+   - Menampilkan daftar kamar kos beserta ringkasan status di bagian atas (total kamar, jumlah kamar yang tersedia, dan jumlah kamar yang terisi).
+   - Fitur pencarian kamar berdasarkan nomor kamar, tipe kamar, atau fasilitas.
+   - Tombol filter cepat untuk menampilkan kamar berdasarkan statusnya (Semua, Tersedia, Terisi).
+   - Pesan keterangan jika kamar yang dicari tidak ditemukan.
 
-## Catatan Debugging (Bug Mentok & Cara Menemukannya)
+2. **Detail Kamar (`RoomDetailScreen`)**
+   - Menampilkan rincian lengkap kamar yang dipilih, seperti nomor kamar, tipe, ID sistem, harga sewa per bulan, dan status hunian saat ini.
+   - Menampilkan daftar fasilitas kamar dalam bentuk tag berikon.
+   - Tombol untuk langsung mengubah status kamar (dari Tersedia menjadi Terisi, atau sebaliknya).
 
-- **Gejala Bug**:
-  Saat selesai mengisi formulir di Layar Tambah Kamar dan menekan tombol *Simpan*, aplikasi berhasil kembali ke Layar Daftar, namun item kamar baru **tidak muncul** sama sekali di daftar layar utama.
+3. **Tambah Kamar (`AddRoomScreen`)**
+   - Form input untuk nomor kamar, harga sewa per bulan, dan fasilitas.
+   - Pilihan tipe kamar (Standard, Deluxe, VIP).
+   - Tombol cepat untuk menambahkan fasilitas umum (seperti AC, WiFi, Kamar Mandi Dalam, Kasur Queen, dll.) agar tidak perlu mengetik manual satu per satu.
+   - Switch untuk menentukan status awal kamar (sudah terisi atau masih kosong).
+   - Validasi form agar input tidak kosong dan nominal harga berupa angka valid.
+
+4. **Widget Kartu Kamar (`RoomCard`)**
+   - Widget terpisah yang reusable untuk menampilkan ringkasan data kamar secara rapi dan konsisten.
+
+## Catatan Debugging
+
+- **Kendala / Bug**:
+  Saat pertama kali mencoba form tambah kamar dan klik tombol Simpan, aplikasi berhasil kembali ke halaman utama tetapi data kamar yang baru diisi tidak muncul di daftar.
 - **Penyebab**:
-  Fungsi navigasi `Navigator.push` di Layar Daftar awalnya dipanggil secara sinkron tanpa kata kunci `await`. Akibatnya, baris kode penambahan list dieksekusi secara instan saat layar form baru saja terbuka (ketika nilai kembalian masih bernilai `null`), bukan saat pengguna selesai menekan tombol simpan.
-- **Cara Menemukan & Memperbaiki**:
-  1. Melakukan pelacakan alur eksekusi menggunakan `debugPrint()` di dalam fungsi navigasi.
-  2. Dari log konsol terminal, terlihat bahwa print setelah `Navigator.push` langsung tercetak mendahului penekanan tombol simpan pada form.
-  3. Masalah diselesaikan dengan mengubah metode navigasi menjadi `async`, menambahkan `await Navigator.push<Room>(...)`, serta membungkus penambahan data ke dalam `setState(() { _rooms.add(newRoom); })` hanya apabila objek `newRoom != null`.
+  Navigasi `Navigator.push` di halaman utama belum diberi kata kunci `await`. Akibatnya, baris penambahan data ke list langsung dijalankan sebelum user selesai mengisi dan menyimpan form (saat data kembaliannya masih `null`).
+- **Solusi**:
+  Fungsi navigasi diubah menjadi `async`, ditambahkan `await` pada pemanggilan `Navigator.push<Room>(...)`, dan penambahan item ke list dibungkus dalam `setState(() { _rooms.add(newRoom); })` dengan pengecekan `if (newRoom != null)`.
 
----
+## Cara Menjalankan
 
-## Tautan Video Demonstrasi (3 Menit)
-- **Tautan YouTube (Unlisted)**: `[Masukkan link video YouTube Anda di sini]`
-
-## Cara Menjalankan Proyek
 ```bash
-# 1. Masuk ke direktori proyek
+# 1. Masuk ke folder proyek
 cd p03_kelolakos
 
-# 2. Periksa kesiapan linter (harus bersih tanpa error)
-flutter analyze
+# 2. Unduh dependensi
+flutter pub get
 
-# 3. Jalankan di emulator / perangkat
+# 3. Jalankan aplikasi
 flutter run
 ```
+

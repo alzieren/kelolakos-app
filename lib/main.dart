@@ -11,11 +11,11 @@ class KelolaKosApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Color(0xFF4F46E5); // Indigo 600
-    const secondaryColor = Color(0xFF06B6D4); // Cyan 500
+    const primaryColor = Color(0xFF4F46E5);
+    const secondaryColor = Color(0xFF06B6D4);
 
     return MaterialApp(
-      title: 'KelolaKos — Manajemen Kos Pintar',
+      title: 'KelolaKos',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -26,7 +26,7 @@ class KelolaKosApp extends StatelessWidget {
           surface: Colors.white,
           brightness: Brightness.light,
         ),
-        scaffoldBackgroundColor: const Color(0xFFF8FAFC), // Slate 50
+        scaffoldBackgroundColor: const Color(0xFFF8FAFC),
         fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
         appBarTheme: const AppBarTheme(
           centerTitle: false,
