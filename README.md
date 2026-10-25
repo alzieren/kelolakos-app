@@ -2,6 +2,8 @@
 
 Aplikasi Flutter sederhana untuk pencatatan dan pengelolaan kamar kos. Aplikasi ini dibuat untuk tugas praktikum P03, dengan fungsi utama untuk melihat daftar kamar kos, melihat rincian tiap kamar, mengubah status kamar (tersedia / terisi), dan menambahkan data kamar baru.
 
+- **Repository**: https://github.com/alzieren/kelolakos-app
+
 ## Halaman dan Fitur
 
 1. **Daftar Kamar (`RoomListScreen`)**
@@ -37,8 +39,9 @@ Aplikasi Flutter sederhana untuk pencatatan dan pengelolaan kamar kos. Aplikasi 
 ## Cara Menjalankan
 
 ```bash
-# 1. Masuk ke folder proyek
-cd p03_kelolakos
+# 1. Clone repository & masuk ke folder
+git clone https://github.com/alzieren/kelolakos-app.git
+cd kelolakos-app
 
 # 2. Unduh dependensi
 flutter pub get
